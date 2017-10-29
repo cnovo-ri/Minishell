@@ -6,7 +6,7 @@
 /*   By: ttresori <ttresori@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/04 02:30:06 by carmand           #+#    #+#             */
-/*   Updated: 2017/10/19 02:11:14 by ttresori         ###   ########.fr       */
+/*   Updated: 2017/10/29 03:19:58 by cnovo-ri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ typedef struct s_sh
 	char	*buf;
 }				t_sh;
 
+t_sh	*ls_tilt(t_sh *sh);
 void	intro(void);
 t_sh	*get_line(char *buf, t_sh *sh);
 char    **get_path(char *buf, t_sh *sh);
@@ -61,5 +62,14 @@ void	free_sh(t_sh *sh);
 void	exec_prout(t_sh *sh, char *bin);
 char	*give_value_old_pwd(t_sh *sh);
 char	**add_env(t_sh *sh, int i);
+int		count_back(char	*name);
+char	*cd_dot(t_sh *sh, char *tmp);
+int		test_racine(t_sh *sh);
+char	*tab_to_1tab(char **tab, t_sh *sh, char *init);
+char	*add_pwd(t_sh *sh, char *init);
+char	*check_slash(t_sh *sh, char *init);
+int		check_2_moove(t_sh *sh);
+char	*cut_one_cut(char *name);
+int		check_error(t_sh *sh);
 
 #endif

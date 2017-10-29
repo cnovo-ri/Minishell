@@ -86,20 +86,14 @@ t_sh	*search_bin(t_sh *sh)
 	tmp = NULL;
 	tmp2 = NULL;
 	if (sh == NULL)
-	{
-		ft_putstr("OK");
 		exec(sh, sh->buf);
-	}
 	if (sh->s_arg == 0)
 		return (sh);
 	if (search_builtin(sh) == 0)
-	{
-		ft_putstr("MOMO");
 		return (sh);
-	}
-	i = 0;
 	if (sh->arg[0][0] != '/' && sh->PATH)
 	{
+		i = 0;
 		while (i < sh->s_PATH)
 		{
 			if (check_dir(sh->PATH[i], sh))

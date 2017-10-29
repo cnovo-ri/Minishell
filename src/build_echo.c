@@ -6,7 +6,7 @@
 /*   By: ttresori <ttresori@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/30 21:23:54 by carmand           #+#    #+#             */
-/*   Updated: 2017/10/07 04:24:05 by ttresori         ###   ########.fr       */
+/*   Updated: 2017/10/29 02:47:55 by ttresori         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 void	ft_echo(t_sh *sh)
 {
-	int 		nb;
+	int nb;
 
 	nb = 1;
-	while(sh->arg[nb])
+	while (sh->arg[nb])
 		ft_putstrspace(sh->arg[nb++]);
 	ft_putchar('\n');
 }

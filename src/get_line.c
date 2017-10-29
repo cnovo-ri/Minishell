@@ -1,5 +1,12 @@
 #include "lib_minishell.h"
 
+/*static  	help_get_line(char *buf, int i, int a)
+{
+
+	return (i);
+}*/
+
+
 t_sh	*get_line(char *buf, t_sh *sh)
 {
 	int i;
@@ -11,26 +18,25 @@ t_sh	*get_line(char *buf, t_sh *sh)
 	a = 0;
 	while ((buf[i] == ' ') || (buf[i] == '\t') || (buf[i] == '\n'))
 		i++;
-//	printf("buf : %s\n", buf);
 	if (buf[i] == '\0')
 		return (sh);
 	while (buf[i] != '\0')
-	{
-		while ((buf[i] == ' ') || (buf[i] == '\t') || (buf[i] == '\n'))
-			i++;
-		while ((buf[i] != ' ') && (buf[i] != '\t') && (buf[i] != '\0') && (buf[i] != '\n'))
 		{
-			if ((buf[i + 1] == ' ') || (buf[i + 1] == '\t')
-				|| (buf[i + 1] == '\0') || (buf[i + 1] == '\n'))
-			{
+			while ((buf[i] == ' ') || (buf[i] == '\t') || (buf[i] == '\n'))
 				i++;
-				a++;
-				break ;
-			}
+			while ((buf[i] != ' ') && (buf[i] != '\t') && (buf[i] != '\0')
+			&& (buf[i] != '\n'))
+			{
+				if ((buf[i + 1] == ' ') || (buf[i + 1] == '\t')
+				|| (buf[i + 1] == '\0') || (buf[i + 1] == '\n'))
+				{
+					i++;
+					a++;
+					break ;
+				}
 			i++;
+			}
 		}
-		//i++;
-	}
 	i = 0;
 	j = 0;
 	if (!(sh->arg = ft_char_2d(a, ft_strlen(buf))))
@@ -41,7 +47,8 @@ t_sh	*get_line(char *buf, t_sh *sh)
 		k = 0;
 		while ((buf[i] == ' ') || (buf[i] == '\t'))
 			i++;
-		while (buf[i] != '\0' && buf[i] != ' ' && buf[i] != '\t' && buf[i] != '\n')
+		while (buf[i] != '\0' && buf[i] != ' ' && buf[i] != '\t' &&
+	buf[i] != '\n')
 		{
 			sh->arg[j][k] = buf[i];
 			i++;
@@ -54,11 +61,11 @@ t_sh	*get_line(char *buf, t_sh *sh)
 
 char	**get_path(char *buf, t_sh *sh)
 {
-	int i;
-	int j;
-	int k;
-	int a;
-	char **path;
+	int		i;
+	int		j;
+	int		k;
+	int		a;
+	char	**path;
 
 	i = 0;
 	a = 1;

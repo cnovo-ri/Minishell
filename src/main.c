@@ -6,7 +6,7 @@
 /*   By: ttresori <ttresori@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/27 23:39:08 by carmand           #+#    #+#             */
-/*   Updated: 2017/10/27 11:57:54 by ttresori         ###   ########.fr       */
+/*   Updated: 2017/10/29 03:52:48 by cnovo-ri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,34 +80,15 @@ t_sh *init_sh(t_sh *sh, char **env)
 	if (ft_strlen(sh->PWD) <= 0)
 		return (sh);
 	ft_strdel(&sh->PWD);
-//	if (search_env(sh, "PATH=") == -1)
-	//	modify_env(sh, "PATH", env[(search_noenv(sh, env, "PATH="))]);
-	if (ft_strcmp(sh->buf, "\n") == 0/*ft_strchr(sh->buf, '\n')*/)
-		{
-	//		ft_putendl("OKOK");
-			free_tab(sh->PATH, -1);
-		//	sh->PWD = getcwd(tmp, 126);
-		//	return (sh);
-		}
-	else if (sh->PATH[0] != '\0')
+	if (ft_strcmp(sh->buf, "\n") == 0)
 	{
-//			ft_putendl("LALALA");
-			free_tab(sh->arg, sh->s_arg);
-			sh->s_arg = 0;
-			free_tab(sh->PATH, sh->s_PATH);
+		free_tab(sh->PATH, -1);
+		sh->PWD = getcwd(tmp, 126);
+		return (sh);
 	}
-//	ft_putendl("LLLLLLLLLLLLLLLLLLLLLLLLLLLLL");
 	ft_strdel(&sh->old_PWD);
 	while (i < sh->s_env)
 	{
-		if (ft_strncmp(env[i], "PATH=", 5) == 0)
-		{
-			if (!(path = ft_strsub(env[i], 5, (ft_strlen(env[i]) - 5))))
-				return (NULL);
-			if (!(sh->PATH = get_path(path, sh)))
-				return (NULL);
-			free(path);
-		}
 		if (0 == ft_strncmp(env[i], "PWD=", 4))
 		{
 			if (!(tmp = ft_strsub(env[i], 4, (ft_strlen(env[i]) - 4))))
@@ -147,27 +128,25 @@ int		main(int a, char **v, char **env)
 			ft_putstr("$> ");
 			ft_putstr("\033[00m");
 			i = 0;
-/*			if (sh->s_arg > 0)
-			{
-				while (sh->arg[i])
-				{
-					printf("\nsh->arg[%d] : %s\n", i, sh->arg[i]);
-					i++;
-				}
-			}
-	*/		free_tab(sh->arg, sh->s_arg);
+			free_tab(sh->arg, sh->s_arg);
 			if ((ret = read(0, sh->buf, 128)))
 			{
 				sh->buf[ret] = '\0';
 				sh = get_line(sh->buf, sh);
+//				ls_tilt(sh);
 				if (sh->buf[1] == '\0')
 				{
+					sh->arg[0] = ft_strdup("\0");
 					continue ;
 				}
 				else
 				{
-					ft_putendl("ELSE");
-					sh = search_bin(sh);
+			/*		if (sh->s_arg > 0)
+					{
+						ft_putstr("IF");
+						ls_tilt(sh);
+					}
+			*/		sh = search_bin(sh);
 				}
 			}
 	}

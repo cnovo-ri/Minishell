@@ -17,19 +17,16 @@ void		free_tab(char **tab, int len)
 	int	i;
 
 	i = 0;
-	if (tab != NULL && len != -1 && len > 1)
+	if (tab != NULL && len != -1 && len > 0 && tab[0] != NULL)
 	{
 		while (i < len)
 		{
-/*			ft_putchar('\n');
-			ft_putendl("LE FREE");
-*/			if (tab[i][0] != '\0')
+			if (tab[i][0] != '\0')
 				ft_strdel(&tab[i]);
-//			ft_putendl("PAS FREE");
 			i++;
 		}
-		ft_putendl("LE FREE");
 		free(tab);
+		len = 0;
 	}
 }
 
