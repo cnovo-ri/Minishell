@@ -56,6 +56,7 @@ t_sh	*get_line(char *buf, t_sh *sh)
 		}
 		j++;
 	}
+//	ls_tilt(sh);
 	return (sh);
 }
 

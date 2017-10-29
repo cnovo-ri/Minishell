@@ -6,7 +6,7 @@
 /*   By: ttresori <ttresori@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/30 21:23:54 by carmand           #+#    #+#             */
-/*   Updated: 2017/10/19 02:15:23 by ttresori         ###   ########.fr       */
+/*   Updated: 2017/10/29 21:16:09 by cnovo-ri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,12 @@ int		check_dir(char *path, t_sh *sh)
 
 int		search_builtin(t_sh *sh)
 {
-	if ((ft_strcmp(sh->arg[0], "exit")) == 0)
+	if (sh->arg[0] == NULL)
+	{
+		sh->s_arg = 0;
+		return (0);
+	}
+	else if ((ft_strcmp(sh->arg[0], "exit")) == 0)
 	{
 		free_sh(sh);
 		exit (0);
@@ -88,7 +93,10 @@ t_sh	*search_bin(t_sh *sh)
 	if (sh == NULL)
 		exec(sh, sh->buf);
 	if (sh->s_arg == 0)
+	{
+		ft_putendl("FIRST IF");
 		return (sh);
+	}
 	if (search_builtin(sh) == 0)
 		return (sh);
 	if (sh->arg[0][0] != '/' && sh->PATH)

@@ -6,7 +6,7 @@
 /*   By: ttresori <ttresori@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/27 23:39:08 by carmand           #+#    #+#             */
-/*   Updated: 2017/10/29 03:52:48 by cnovo-ri         ###   ########.fr       */
+/*   Updated: 2017/10/29 21:15:41 by cnovo-ri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,12 +141,9 @@ int		main(int a, char **v, char **env)
 				}
 				else
 				{
-			/*		if (sh->s_arg > 0)
-					{
-						ft_putstr("IF");
+					if (sh->s_arg > 0)
 						ls_tilt(sh);
-					}
-			*/		sh = search_bin(sh);
+					sh = search_bin(sh);
 				}
 			}
 	}
