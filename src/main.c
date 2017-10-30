@@ -6,55 +6,13 @@
 /*   By: ttresori <ttresori@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/27 23:39:08 by carmand           #+#    #+#             */
-/*   Updated: 2017/10/29 21:15:41 by cnovo-ri         ###   ########.fr       */
+/*   Updated: 2017/10/29 22:36:58 by ttresori         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lib_minishell.h"
 
-t_sh *init_sh_first(t_sh *sh, char **env)
-{
-	int i;
-	char *path;
-
-	i = 0;
-	path = NULL;
-	sh->PWD = NULL;
-	sh->PATH = NULL;
-	sh->old_PWD = NULL;
-	sh->sh_env = NULL;
-	while (env[i] != NULL)
-	{
-		if (0 == ft_strncmp(env[i], "PATH=", 5))
-		{
-			if (!(path = ft_strsub(env[i], 5, (ft_strlen(env[i]) - 5))))
-				return (NULL);
-			if (!(sh->PATH = get_path(path, sh)))
-				return (NULL);
-			ft_strdel(&path);
-		}
-		if (0 == ft_strncmp(env[i], "PWD=", 4))
-		{
-			if (!(sh->PWD = ft_strsub(env[i], 4, (ft_strlen(env[i]) - 4))))
-				return (NULL);
-		}
-		i++;
-	}
-	if (!(sh->sh_env = (char**)malloc(sizeof(char*) * i)))
-		return (NULL);
-	sh->s_env = i;
-	i = 0;
-	while (i < sh->s_env)
-	{
-		if (!(sh->sh_env[i] = ft_strdup(env[i])))
-			return (NULL);
-		i++;
-	}
-	sh->sh_env = modify_env(sh, "OLDPWD", sh->PWD);
-	return (sh);
-}
-
-int		search_noenv(t_sh *sh, char	**env, char *line)
+int		search_noenv(t_sh *sh, char**env, char	*line)
 {
 	int i;
 
@@ -68,10 +26,31 @@ int		search_noenv(t_sh *sh, char	**env, char *line)
 	return (-1);
 }
 
-t_sh *init_sh(t_sh *sh, char **env)
+t_sh	*help_init_sh(t_sh *sh, char *tmp)
 {
-	int i;
-	char *path;
+	if (ft_strcmp(sh->buf, "\n") == 0)
+	{
+		free_tab(sh->PATH, -1);
+		sh->PWD = getcwd(tmp, 126);
+		return (sh);
+	}
+	return (sh);
+}
+
+char	*init_cmp(t_sh *sh, char *tmp, char **env, int i)
+{
+	if (!(tmp = ft_strsub(env[i], 4, (ft_strlen(env[i]) - 4))))
+		return (NULL);
+	if (!(sh->PWD = ft_strdup(tmp)))
+		return (NULL);
+	ft_strdel(&tmp);
+	return (tmp);
+}
+
+t_sh	*init_sh(t_sh *sh, char **env)
+{
+	int		i;
+	char	*path;
 	char	*tmp;
 
 	i = 0;
@@ -80,23 +59,12 @@ t_sh *init_sh(t_sh *sh, char **env)
 	if (ft_strlen(sh->PWD) <= 0)
 		return (sh);
 	ft_strdel(&sh->PWD);
-	if (ft_strcmp(sh->buf, "\n") == 0)
-	{
-		free_tab(sh->PATH, -1);
-		sh->PWD = getcwd(tmp, 126);
-		return (sh);
-	}
+	help_init_sh(sh, tmp);
 	ft_strdel(&sh->old_PWD);
 	while (i < sh->s_env)
 	{
 		if (0 == ft_strncmp(env[i], "PWD=", 4))
-		{
-			if (!(tmp = ft_strsub(env[i], 4, (ft_strlen(env[i]) - 4))))
-				return (NULL);
-			if (!(sh->PWD = ft_strdup(tmp)))
-				return (NULL);
-			ft_strdel(&tmp);
-		}
+			tmp = init_cmp(sh, tmp, env, i);
 		i++;
 	}
 	sh->sh_env = env;
@@ -105,9 +73,8 @@ t_sh *init_sh(t_sh *sh, char **env)
 
 int		main(int a, char **v, char **env)
 {
-	size_t ret;
-	t_sh *sh;
-	int	i;
+	t_sh	*sh;
+
 	sh = NULL;
 	if (!(sh = (t_sh*)malloc(sizeof(t_sh))))
 		return (0);
@@ -118,35 +85,9 @@ int		main(int a, char **v, char **env)
 	sh->buf = ft_strnew(128);
 	sh->arg = NULL;
 	intro();
-	while(42)
-	{
-		if (!(sh = init_sh(sh, sh->sh_env)))
-				return (0);
-			ft_putstr("\033[32m");
-			if (sh->PWD)
-				ft_putstr(sh->PWD);
-			ft_putstr("$> ");
-			ft_putstr("\033[00m");
-			i = 0;
-			free_tab(sh->arg, sh->s_arg);
-			if ((ret = read(0, sh->buf, 128)))
-			{
-				sh->buf[ret] = '\0';
-				sh = get_line(sh->buf, sh);
-//				ls_tilt(sh);
-				if (sh->buf[1] == '\0')
-				{
-					sh->arg[0] = ft_strdup("\0");
-					continue ;
-				}
-				else
-				{
-					if (sh->s_arg > 0)
-						ls_tilt(sh);
-					sh = search_bin(sh);
-				}
-			}
-	}
+	while (42)
+		if (minishell(sh) == -1)
+			break ;
 	a++;
 	v[0][0] = 1;
 	return (1);

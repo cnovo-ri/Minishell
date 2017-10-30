@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   help_env.c 	                                    :+:      :+:    :+:   */
+/*   help_env.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ttresori <ttresori@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/22 20:32:15 by carmand           #+#    #+#             */
-/*   Updated: 2017/10/19 02:20:03 by ttresori         ###   ########.fr       */
+/*   Updated: 2017/10/29 21:28:37 by ttresori         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int		search_env(t_sh *sh, char *line)
 	int i;
 
 	i = 0;
-	while(i < sh->s_env)
+	while (i < sh->s_env)
 	{
 		if (ft_strncmp(sh->sh_env[i], line, ft_strlen(line)) == 0)
 			return (i);
@@ -43,9 +43,9 @@ int		ft_strlen_2d(t_sh *sh)
 	int i;
 
 	i = 0;
-	while(i < sh->s_env)
+	while (i < sh->s_env)
 		i++;
-	return(i);
+	return (i);
 }
 
 char	**ft_cpy_2char(t_sh *sh, char **init)
@@ -68,13 +68,13 @@ char	**realloc_env(t_sh *sh, char *place)
 {
 	char	**new;
 	char	*tmp;
-	int 	start;
+	int		start;
 
 	start = 0;
 	if (!(new = (char**)malloc(sizeof(char*) * (sh->s_env + 1))))
 		return (NULL);
 	tmp = ft_strdup(place);
-	while(start < sh->s_env)
+	while (start < sh->s_env)
 	{
 		new[start] = ft_strdup(sh->sh_env[start]);
 		start++;

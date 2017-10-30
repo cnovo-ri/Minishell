@@ -35,7 +35,11 @@ typedef struct s_sh
 	char	*buf;
 }				t_sh;
 
+int 	minishell(t_sh *sh);
 t_sh	*ls_tilt(t_sh *sh);
+int		search_builtin(t_sh *sh);
+int		check_dir(char *path, t_sh *sh);
+void	help_search_bin(t_sh *sh, int i);
 void	intro(void);
 t_sh	*get_line(char *buf, t_sh *sh);
 char    **get_path(char *buf, t_sh *sh);
@@ -47,6 +51,7 @@ void    put_env(char **sh_env, int s_env);
 char 	*exec_cd(t_sh *sh);
 void	ft_echo(t_sh *sh);
 t_sh	*init_sh(t_sh *sh, char **env);
+t_sh	*init_sh_first(t_sh *sh, char **env);
 t_sh 	*init_pwd(t_sh *sh);
 char	*add_pwd(t_sh *sh, char *init);
 char	**add_pwd_env(t_sh *sh);

@@ -6,13 +6,13 @@
 /*   By: ttresori <ttresori@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/30 21:23:54 by carmand           #+#    #+#             */
-/*   Updated: 2017/10/29 02:50:10 by ttresori         ###   ########.fr       */
+/*   Updated: 2017/10/29 21:26:05 by ttresori         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lib_minishell.h"
 
-int		count_back(char	*name)
+int		count_back(char	 *name)
 {
 	int i;
 	int slash;

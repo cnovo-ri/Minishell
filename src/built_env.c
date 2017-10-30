@@ -6,7 +6,7 @@
 /*   By: ttresori <ttresori@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/22 20:32:15 by carmand           #+#    #+#             */
-/*   Updated: 2017/10/29 02:07:08 by ttresori         ###   ########.fr       */
+/*   Updated: 2017/10/29 23:06:49 by cnovo-ri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,10 +79,7 @@ char		**unset_env(t_sh *sh)
 	else
 		new = help_unset_env(sh, new, j, k);
 	if (ft_strncmp(sh->arg[1], "PATH", 4) == 0)
-	{
-		ft_putendl("HELLO");
 		free_tab(sh->PATH, sh->s_PATH);
-	}
 	free_tab(sh->sh_env, sh->s_env);
 	sh->s_env--;
 	return (new);
